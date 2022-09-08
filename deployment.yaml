@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-app
+    env: qa
+  name: my-app
+  namespace: mlops
+spec:
+  replicas: 2 # Creating two PODs for our app
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+        env: qa
+    spec:
+      containers:
+      - image: dhouha20/my-kube-api:latest # Docker image name, that we pushed to GCR
+        name: my-kube-api     # POD name 
+        command: ["python3", "api.py" ]
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app
+  labels:
+    app: my-app
+  namespace: mlops
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5000
+    targetPort: 5000
+  selector:
+    app: my-app
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mlops
