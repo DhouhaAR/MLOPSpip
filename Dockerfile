@@ -15,6 +15,7 @@ COPY train.csv ./train.csv
 COPY test.csv ./test.csv
 COPY test.json ./test.json
 
+copy inference.py ./inference.py
 COPY train.py ./train.py
 COPY api.py ./api.py
 
