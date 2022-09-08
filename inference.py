@@ -27,11 +27,17 @@ def inference():
     model_path = os.path.join(MODEL_DIR, model_file)
         
     # Load, read and normalize training data
+    PROCESSED_DATA_DIR = os.environ["PROCESSED_DATA_DIR"]
+    test_data_path = os.path.join(PROCESSED_DATA_DIR,testing)
     testing = "test.csv"
     data_test = pd.read_csv(testing)
+
+    # Load data
+    df = pd.read_csv(test_data_path, sep=",")
+
         
-    y_test = data_test['# Letter'].values
-    X_test = data_test.drop(data_test.loc[:, 'Line':'# Letter'].columns, axis = 1)
+    y_test = df['# Letter'].values
+    X_test = df.drop(data_test.loc[:, 'Line':'# Letter'].columns, axis = 1)
    
     print("Shape of the test data")
     print(X_test.shape)
