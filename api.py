@@ -86,7 +86,7 @@ def score():
 # Return classification score for both Neural Network and LDA inference model from the all dataset provided
 def test_acc():
 
-    data = pd.read_csv('./test.csv')
+    data = pd.read_json('./test.json')
     data_test = data.transpose()
     y_test = data_test['# Letter'].values
     X_test = data_test.drop(data_test.loc[:, 'Line':'# Letter'].columns, axis = 1)
@@ -101,11 +101,11 @@ def test_acc():
     test_logit = accuracy_score(y_test,logit_predictions)
 
      # Test accuracy to JSON
-    test_metadata = {
-    'test_acc': test_logit
-    }
+     # test_metadata = {
+     # 'test_acc': test_logit
+    #}
     
-    return {'test_acc': test_metadata}
+    return {'test_acc':  test_logit}
 
 # API 4
 # Flask route so that we can serve HTTP traffic on that route
